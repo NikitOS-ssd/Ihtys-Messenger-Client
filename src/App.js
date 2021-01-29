@@ -2,7 +2,22 @@ import React from 'react';
 import logo from './logo.svg';
 import './App.css';
 
-function App() {
+import io from 'socket.io-client';
+
+let socket;
+
+function App({location}) {
+  const SERVER = 'localhost:4000';
+
+
+  React.useEffect(() => {
+    console.log('Start application');
+
+    socket = io(SERVER);
+
+    console.log(socket);
+  }, [SERVER])
+
   return (
     <div className="App">
       <header className="App-header">
