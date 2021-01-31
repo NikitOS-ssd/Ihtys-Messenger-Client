@@ -1,40 +1,28 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React from "react";
+import "./App.css";
+import { Route, Switch, Redirect } from "react-router-dom";
+import Auth from "./Components/Authorization";
+import Chat from "./Components/Chat";
 
-import io from 'socket.io-client';
-
-let socket;
-
-function App({location}) {
-  const SERVER = 'localhost:4000';
-
-
-  React.useEffect(() => {
-    console.log('Start application');
-
-    socket = io(SERVER);
-
-    console.log(socket);
-  }, [SERVER])
-
+function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+      <main>
+        <section className="glass">
+          <Switch>
+            <Route exact path="/" component={Auth} />
+            <Route path="/auth" component={Auth} />
+            <Route path="/chat" component={Chat} />
+
+            <Route>
+              <Redirect to="/auth" />
+            </Route>
+          </Switch>
+        </section>
+      </main>
+      <div className="circle1"></div>
+      <div className="circle2"></div>
+    </>
   );
 }
 
