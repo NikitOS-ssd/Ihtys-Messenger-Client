@@ -14,16 +14,17 @@ const Chat = (props) => {
     const socketio = io(SERVER);
 
     console.log(socketio);
+    console.log(user);
 
     setLogin(user.login);
     setStatus(user.status);
     setAuth(user.isAuth);
   }, []);
 
-  if (!user.isAuth) {
-    console.log("Не зареган");
-    window.location.href = "/auth";
-  }
+  // if (!user.isAuth) {
+  //   console.log("Не зареган");
+  //   // window.location.href = "/auth";
+  // }
 
   const authorizedChat = (
     <>
