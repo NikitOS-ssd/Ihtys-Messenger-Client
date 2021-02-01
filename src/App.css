@@ -48,6 +48,7 @@ main {
   border-radius: 2rem;
   z-index: 2;
   backdrop-filter: blur(2rem);
+  backdrop-filter: blur(20px);
   display: flex;
 }
 .circle1,
@@ -67,10 +68,12 @@ main {
 .circle1 {
   top: 5%;
   right: 15%;
+  animation: circle-animo-1 23s ease-in-out infinite;
 }
 .circle2 {
   bottom: 5%;
   left: 10%;
+  animation: circle-animo-2 23s ease-in-out infinite;
 }
 .left-board {
   flex: 1;
@@ -107,7 +110,7 @@ main {
 }
 
 .link {
-  width: 90%;
+  width: 100%;
   display: flex;
   margin: 2rem 0rem;
   padding: 1rem 5rem;
@@ -242,6 +245,21 @@ main {
 .form-block input::placeholder {
   color: rgba(0, 0, 0, 0.19);
 }
+.password-input {
+  display: flex;
+  align-items: center;
+}
+.password-shower {
+  margin-top: 5px;
+  margin-left: 10px;
+  padding: 0.4rem 0.6rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #ffffff;
+  border-radius: 15px;
+  cursor: pointer;
+}
 .auth-button {
   margin-top: 25px;
   padding: 0.6rem 1.2rem;
@@ -253,4 +271,41 @@ main {
   color: #ffffff;
   outline: 0;
   cursor: pointer;
+}
+
+@keyframes circle-animo-1 {
+  0% {
+    top: 5%;
+    right: 15%;
+  }
+  50% {
+    top: 50%;
+    right: 65%;
+  }
+  75% {
+    top: 50%;
+    right: 15%;
+  }
+  100% {
+    top: 5%;
+    right: 15%;
+  }
+}
+@keyframes circle-animo-2 {
+  0% {
+    bottom: 5%;
+    left: 10%;
+  }
+  50% {
+    bottom: 50%;
+    left: 65%;
+  }
+  75% {
+    bottom: 50%;
+    left: 15%;
+  }
+  100% {
+    bottom: 5%;
+    left: 15%;
+  }
 }

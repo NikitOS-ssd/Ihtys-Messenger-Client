@@ -1,24 +1,12 @@
-import React, { useState } from "react";
-import { Link } from "react-router-dom";
-import LockIcon from "@material-ui/icons/Lock";
+import React from "react";
 import { connect } from "react-redux";
+import { Route, Switch, Link } from "react-router-dom";
+import LockIcon from "@material-ui/icons/Lock";
+import LoginForm from "./LoginForm";
+import RegisterForm from "./RegisterForm";
 
 const Auth = (props) => {
-  const [login, setLogin] = useState("");
-  const [password, setPassword] = useState("");
-
-  const {authUser} = props;
-
-  function authorization() {
-    if(login) {
-      if(password) {
-        authUser(login);
-        // window.location.href = "/chat";
-      }
-    } else {
-      alert('Undefined user login');
-    }
-  }
+  const { loginUser, registerUser } = props;
 
   return (
     <>
@@ -28,12 +16,16 @@ const Auth = (props) => {
           <LockIcon style={{ fontSize: "5rem", color: "#426696" }} />
         </div>
         <div className="links">
-          <div className="link">
-            <h2>Login</h2>
-          </div>
-          <div className="link">
-            <h2>Register</h2>
-          </div>
+          <Link to="/login">
+            <div className="link">
+              <h2>Login</h2>
+            </div>
+          </Link>
+          <Link to="/register">
+            <div className="link">
+              <h2>Register</h2>
+            </div>
+          </Link>
         </div>
         <Link to="/chat" className="about-chat-info">
           <div className="pro">
@@ -45,29 +37,21 @@ const Auth = (props) => {
       {/* RIGHT BOARD CONTAINER */}
       <div className="right-board">
         <h1>Authorization</h1>
-
-        <div className="authorized-block">
-          <div className="form-block">
-            <h2>Your login</h2>
-            <input
-              placeholder="enter your login"
-              type="text"
-              value={login}
-              onChange={(event) => setLogin(event.target.value)}
-            />
-          </div>
-          <div className="form-block">
-            <h2>Your password</h2>
-            <input
-              placeholder="enter your password"
-              type="password"
-              value={password}
-              onChange={(event) => setPassword(event.target.value)}
-            />
-          </div>
-
-          <button className="auth-button" onClick={authorization} >Login</button>
-        </div>
+        <Switch>
+          <Route
+            exact
+            path="/"
+            render={() => <LoginForm loginFunction={loginUser} />}
+          />
+          <Route
+            path="/login"
+            render={() => <LoginForm loginFunction={loginUser} />}
+          />
+          <Route
+            path="/register"
+            render={() => <RegisterForm registerFunction={registerUser} />}
+          />
+        </Switch>
       </div>
     </>
   );
@@ -75,13 +59,14 @@ const Auth = (props) => {
 
 function mapStateToProps(state) {
   return {
-    user: state.user
-  }
+    user: state.user,
+  };
 }
 function mapDispatchToProps(dispatch) {
   return {
-    authUser: (login) => dispatch({type: "LOGIN", login: login}) 
-  }
+    loginUser: (login) => dispatch({ type: "LOGIN", login: login }),
+    registerUser: (login, status) => dispatch({ type: "REGISTRATION", login: login, status: status }),
+  };
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Auth);

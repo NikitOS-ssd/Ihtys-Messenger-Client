@@ -22,11 +22,12 @@ function App(props) {
           ) : (
             <Switch>
               <Route exact path="/" component={Auth} />
-              <Route path="/auth" component={Auth} />
+              <Route path="/login" component={Auth} />
+              <Route path="/register" component={Auth} />
               {/* <Route path="/chat" component={Chat} /> */}
 
               <Route>
-                <Redirect to="/auth" />
+                <Redirect to="/register" />
               </Route>
             </Switch>
           )}

@@ -1,14 +1,10 @@
 const initialState = {
   user: {
     isAuth: false,
-    login: 'matskovskiy_777',
-    room: '',
+    login: 'undefined',
     status: `I'm superman`,
   }
 }
-
-const defaultStateStatus = `I'm superman`;
-const defaultStateRoom = '';
 
 function rootReducer(state = initialState, action) {
   switch(action.type) {
@@ -17,13 +13,20 @@ function rootReducer(state = initialState, action) {
         user: {
           isAuth: true,
           login: action.login,
-          status: defaultStateStatus,
-          room: defaultStateRoom,
+          status: `I'm supreman`,
         }
       }
+    case "REGISTRATION":
+      return {
+        user: {
+          isAuth: true,
+          login: action.login,
+          status: action.status
+        }
+      }
+    default:
+      return state
   }
-
-  return state
 }
 
 export default rootReducer
