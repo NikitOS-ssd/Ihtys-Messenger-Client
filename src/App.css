@@ -13,7 +13,7 @@ h1 {
 h2,
 p {
   color: #658ec6;
-  font-weight: 500;
+  font-weight: bold;
   opacity: 0.8;
 }
 
@@ -229,6 +229,9 @@ main {
 }
 .form-block {
   margin-bottom: 2%;
+}
+.form-block h2 {
+  font-weight: bold;
 }
 .form-block input {
   width: 300px;

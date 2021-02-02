@@ -18,28 +18,25 @@ function App(props) {
       <main>
         <section className="glass">
           {props.user.isAuth ? (
-            <Chat />
+            <Switch>
+              <Route exact path="/" component={Chat} />
+              <Route path="/chat" component={Chat} />
+
+              <Route>
+                <Redirect to="/chat" />
+              </Route>
+            </Switch>
           ) : (
             <Switch>
               <Route exact path="/" component={Auth} />
               <Route path="/login" component={Auth} />
               <Route path="/register" component={Auth} />
-              {/* <Route path="/chat" component={Chat} /> */}
 
               <Route>
                 <Redirect to="/register" />
               </Route>
             </Switch>
           )}
-          {/* <Switch>
-            <Route exact path="/" component={Auth} />
-            <Route path="/auth" component={Auth} />
-            <Route path="/chat" component={Chat} />
-
-            <Route>
-              <Redirect to="/auth" />
-            </Route>
-          </Switch> */}
         </section>
       </main>
       <div className="circle1"></div>
