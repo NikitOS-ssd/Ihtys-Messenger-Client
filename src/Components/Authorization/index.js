@@ -7,6 +7,22 @@ import RegisterForm from "./RegisterForm";
 
 const Auth = (props) => {
   const { loginUser, registerUser } = props;
+  
+  function safeLoginUser(login) {
+    const userModel = {
+      login: login,
+    }
+
+    localStorage.setItem('user', JSON.stringify(userModel));
+  }
+  function safeRegisterUser(login, status) {
+    const userModel = {
+      login: login,
+      status: status,
+    }
+
+    localStorage.setItem('user', JSON.stringify(userModel));
+  }
 
   return (
     <>
@@ -41,15 +57,15 @@ const Auth = (props) => {
           <Route
             exact
             path="/"
-            render={() => <LoginForm loginFunction={loginUser} />}
+            render={() => <LoginForm loginFunction={loginUser} safeUser={safeLoginUser} />}
           />
           <Route
             path="/login"
-            render={() => <LoginForm loginFunction={loginUser} />}
+            render={() => <LoginForm loginFunction={loginUser} safeUser={safeLoginUser} />}
           />
           <Route
             path="/register"
-            render={() => <RegisterForm registerFunction={registerUser} />}
+            render={() => <RegisterForm registerFunction={registerUser} safeUser={safeRegisterUser} />}
           />
         </Switch>
       </div>

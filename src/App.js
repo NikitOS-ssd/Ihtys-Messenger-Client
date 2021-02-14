@@ -8,8 +8,6 @@ import { connect } from "react-redux";
 function App(props) {
 
   React.useEffect(() => {
-    const s = localStorage.getItem('us');
-    localStorage.setItem('us', +s+1);
     console.log(localStorage);
   }, [])
 

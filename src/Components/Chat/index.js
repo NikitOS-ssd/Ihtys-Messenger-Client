@@ -3,28 +3,34 @@ import { connect } from "react-redux";
 import io from "socket.io-client";
 
 const SERVER = process.env.REACT_APP_SERVER_URL;
+var socketio;
 
-const Chat = (props) => {
+const Chat = ({user}) => {
   const [login, setLogin] = useState("");
   const [status, setStatus] = useState("");
-  const [isAuth, setAuth] = useState(false)
-  const { user } = props;
 
   useEffect(() => {
-    const socketio = io(SERVER);
+    socketio = io(SERVER);
 
-    console.log(socketio);
-    console.log(user);
+    const client = JSON.parse(localStorage.getItem('user'));
+    console.log(client);
+
+    console.log('USER', user);
 
     setLogin(user.login);
     setStatus(user.status);
-    setAuth(user.isAuth);
+
+    socketio.emit('auth client', {user: client.login, status: client.status});
+
+    socketio.on('chat message', function(data) {
+      console.log(data);
+    })
   }, []);
 
-  // if (!user.isAuth) {
-  //   console.log("Не зареган");
-  //   // window.location.href = "/auth";
-  // }
+  function createMessage() {
+    const message = prompt('Enter your merssage to server', '');
+    socketio.emit('chat message', message);
+  }
 
   const authorizedChat = (
     <>
@@ -58,9 +64,10 @@ const Chat = (props) => {
           <img src="./images/controller.png" alt="" />
         </div> */}
       </div>
+
       {/* RIGHT BOARD CONTAINER */}
       <div className="right-board">
-        <h1>Messanger</h1>
+        <h1 onClick={createMessage}>Messanger</h1>
       </div>
     </>
   );

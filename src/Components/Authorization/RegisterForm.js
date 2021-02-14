@@ -1,21 +1,43 @@
 import React, { useState } from "react";
+import Snackbar from '@material-ui/core/Snackbar';
+import MuiAlert from '@material-ui/lab/Alert';
 import VisibilityIcon from "@material-ui/icons/Visibility";
 import VisibilityOffIcon from "@material-ui/icons/VisibilityOff";
 
-function RegisterForm({registerFunction}) {
+
+function Alert(props) {
+  return <MuiAlert elevation={6} variant="filled" {...props} />;
+}
+
+function RegisterForm({registerFunction, safeUser}) {
   const [login, setLogin] = useState("");
   const [status, setStatus] = useState("");
   const [password, setPassword] = useState("");
   const [passwordVisibility, setPasswordVisibility] = useState(false);
+  const [errorAuthMessage, setErrorAuthMessage] = useState(undefined);
+  const [open, setOpen] = useState(false);
   
   function authorization() {
     if (login) {
       if (password) {
         registerFunction(login, status);
+        safeUser(login, status);
+      } else {
+        showErrorMessage('Password not entered!');
       }
     } else {
-      alert("Undefined user login");
+      showErrorMessage('Login not entered!');
     }
+  }
+
+
+  function closeErrorMessage() {
+    setOpen(false);
+  }
+
+  function showErrorMessage(message) {
+    setOpen(true);
+    setErrorAuthMessage(message);
   }
 
   return (
@@ -59,6 +81,11 @@ function RegisterForm({registerFunction}) {
       <button className="auth-button" onClick={authorization}>
         Register
       </button>
+      <Snackbar open={open} autoHideDuration={3000} onClose={closeErrorMessage}>
+        <Alert onClose={closeErrorMessage} severity="error">
+          {errorAuthMessage}
+        </Alert>
+      </Snackbar>
     </div>
   );
 }

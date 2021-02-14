@@ -1,27 +1,47 @@
 import React, { useState } from "react";
-import { Redirect } from "react-router-dom";
+import Snackbar from '@material-ui/core/Snackbar';
+import MuiAlert from '@material-ui/lab/Alert';
 import VisibilityIcon from "@material-ui/icons/Visibility";
 import VisibilityOffIcon from "@material-ui/icons/VisibilityOff";
 
-function LoginForm({loginFunction}) {
+
+function Alert(props) {
+  return <MuiAlert elevation={6} variant="filled" {...props} />;
+}
+
+function LoginForm({loginFunction, safeUser}) {
   const [login, setLogin] = useState("");
   const [password, setPassword] = useState("");
   const [passwordVisibility, setPasswordVisibility] = useState(false);
+  const [errorAuthMessage, setErrorAuthMessage] = useState(undefined);
+  const [open, setOpen] = useState(false);
   
   function authorization() {
     if (login) {
       if (password) {
         loginFunction(login);
+        safeUser(login);
+      } else {
+        showErrorMessage('Password not entered!');
       }
     } else {
-      alert("Undefined user login");
+      showErrorMessage('Login not entered!');
     }
+  }
+
+  function closeErrorMessage() {
+    setOpen(false);
+  }
+
+  function showErrorMessage(message) {
+    setOpen(true);
+    setErrorAuthMessage(message);
   }
 
   return (
     <div className="authorized-block">
       <div className="form-block">
-        <h2>Your login</h2>
+        <h2>Your login*</h2>
         <input
           placeholder="enter your login"
           type="text"
@@ -30,7 +50,7 @@ function LoginForm({loginFunction}) {
         />
       </div>
       <div className="form-block">
-        <h2>Your password</h2>
+        <h2>Your password*</h2>
         <div className="password-input">
           <input
             placeholder="enter your password"
@@ -50,6 +70,11 @@ function LoginForm({loginFunction}) {
       <button className="auth-button" onClick={authorization}>
         Login
       </button>
+      <Snackbar open={open} autoHideDuration={3000} onClose={closeErrorMessage}>
+        <Alert onClose={closeErrorMessage} severity="error">
+          {errorAuthMessage}
+        </Alert>
+      </Snackbar>
     </div>
   );
 }
