@@ -10,10 +10,14 @@ const Chat = ({user}) => {
   const [status, setStatus] = useState("");
 
   useEffect(() => {
+    if(SERVER) {
+      console.log('Web socket server can be start', SERVER);
+    } else {
+      console.log('Web socket server are crashed', SERVER);
+    }
     socketio = io(SERVER);
 
     const client = JSON.parse(localStorage.getItem('user'));
-    console.log(client);
 
     console.log('USER', user);
 

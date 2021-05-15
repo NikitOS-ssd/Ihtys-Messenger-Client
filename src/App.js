@@ -8,7 +8,23 @@ import { connect } from "react-redux";
 function App(props) {
 
   React.useEffect(() => {
-    console.log(localStorage);
+    // console.log(localStorage);
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition((position) => {
+        console.log(position);
+        const {latitude, longitude} = position.coords;
+        const url = `https://www.openstreetmap.org/#map=18/${latitude}/${longitude}`;
+        
+        fetch(url, {
+          headers: {
+            'Content-Type': 'application/json',
+            'Access-Control-Allow-Origin': 'no-cors',
+          }
+        }).then(res => res.json()).then(data => console.log(data));
+      });
+    } else {
+      console.log("Geolocation is not supported by this browser.");
+    }
   }, [])
 
   return (
