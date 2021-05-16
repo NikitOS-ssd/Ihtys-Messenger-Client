@@ -5,6 +5,8 @@ import Auth from "./Components/Authorization";
 import Chat from "./Components/Chat";
 import { connect } from "react-redux";
 
+const GOOGLE_API_KEY = 'AIzaSyCySNS3r4GwDqDzwrVWkEmqUXI9uyttFdc';
+
 function App(props) {
 
   React.useEffect(() => {
@@ -14,13 +16,10 @@ function App(props) {
         console.log(position);
         const {latitude, longitude} = position.coords;
         const url = `https://www.openstreetmap.org/#map=18/${latitude}/${longitude}`;
+        const newUrl = `https://maps.googleapis.com/maps/api/geocode/json?address=${latitude}, ${longitude}&key=${GOOGLE_API_KEY}`;
+
         
-        fetch(url, {
-          headers: {
-            'Content-Type': 'application/json',
-            'Access-Control-Allow-Origin': 'no-cors',
-          }
-        }).then(res => res.json()).then(data => console.log(data));
+        fetch(newUrl).then(res => res.json()).then(data => console.log(data));
       });
     } else {
       console.log("Geolocation is not supported by this browser.");
